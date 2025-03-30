@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* app/globals.css */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+:root {
+  --font-orbitron: "Orbitron", sans-serif;
+}
+
+.recharts-tooltip-cursor {
+  fill: rgba(229, 231, 235, 0.1);
+}
+
+.recharts-cartesian-grid line {
+  stroke: #e5e7eb;
+}
+
+body {
+  font-family: var(--font-inter); /* Defina Inter como fonte padrão */
+}
+
+/* Caso queira aplicar Orbitron em títulos ou outras seções */
+h1,
+ul,
+h2,
+h3 .orbitron-text {
+  font-family: var(--font-orbitron);
+}
+
+@keyframes neon-pulse {
+  0% {
+    text-shadow: 0 0 10px rgba(0, 244, 255, 0.8);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0, 244, 255, 0.9),
+      0 0 30px rgba(0, 124, 255, 0.6);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(0, 244, 255, 0.8);
+  }
+}
+
+.neon-text {
+  animation: neon-pulse 3s ease-in-out infinite;
+}
