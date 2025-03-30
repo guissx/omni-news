@@ -1,9 +1,8 @@
-import Header from "../components/header";
-
-import Carousel from "../components/carousel";
-import NewsCarousel from "../components/card";
-import Forms from "../components/forms";
-import BitcoinChart from "../components/cryptoChart";
+import Carousel from "../components/carousel/carousel";
+import NewsCarousel from "../components/card/card";
+import Forms from "../components/forms/forms";
+import BitcoinChart from "../components/cryptoChart/cryptoChart";
+import Title from "../components/title/title";
 
 const newsItems = [
   {
@@ -37,7 +36,6 @@ const newsItems = [
 export default function Home() {
   return (
     <div className="py-28 flex justify-center flex-col items-center ">
-      <Header></Header>
       <Carousel
         items={[
           {
@@ -52,12 +50,29 @@ export default function Home() {
             description: "Descrição detalhada do segundo slide do carrossel.",
             buttonText: "Ver Detalhes",
           },
+          {
+            image: "/assets/images/new-york-1867569.jpg",
+            title: "Segundo Slide",
+            description: "Descrição detalhada do segundo slide do carrossel.",
+            buttonText: "Ver Detalhes",
+          },
+          {
+            image: "/assets/images/new-york-1867569.jpg",
+            title: "Segundo Slide",
+            description: "Descrição detalhada do segundo slide do carrossel.",
+            buttonText: "Ver Detalhes",
+          },
         ]}
       ></Carousel>
-
-      <NewsCarousel items={newsItems}></NewsCarousel>
+      <section className="flex flex-col items-center justify-center w-full">
+        <Title title={"Recent News"}></Title>
+        <NewsCarousel items={newsItems}></NewsCarousel>
+      </section>
       <BitcoinChart></BitcoinChart>
-      <Forms></Forms>
+      <section className="flex flex-col items-center justify-center w-full">
+        <Title title={"Contact Forms"}></Title>
+        <Forms></Forms>
+      </section>
     </div>
   );
 }

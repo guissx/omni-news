@@ -1,12 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState } from "react";
-
-interface CarouselItem {
-  image: string;
-  title: string;
-  description: string;
-  buttonText: string;
-}
+import { CarouselItem } from "./carouselInterface";
 
 interface CarouselProps {
   items: CarouselItem[];

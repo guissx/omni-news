@@ -1,30 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 // components/NewsCarousel.tsx
 "use client";
 
 import { useState } from "react";
-
-interface NewsItem {
-  id: number;
-  category: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  timestamp: string;
-}
+import { NewsItem } from "./cardInterface";
+import { getCardStyle } from "./cardUtils";
 
 export default function NewsCarousel({ items }: { items: NewsItem[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const getCardStyle = (index: number) => {
-    const isActive = index === activeIndex;
-    const isNext = index === (activeIndex + 1) % items.length;
-    const isPrev = index === (activeIndex - 1 + items.length) % items.length;
-
-    if (isActive) return "translate-x-0 opacity-100 z-10 scale-100";
-    if (isNext) return "translate-x-full opacity-0 scale-90 z-0";
-    if (isPrev) return "-translate-x-full opacity-0 scale-90 z-0";
-    return "translate-x-0 opacity-0 scale-90 z-0";
-  };
 
   const navigate = (direction: "next" | "prev") => {
     setActiveIndex((prev) =>
@@ -35,15 +18,17 @@ export default function NewsCarousel({ items }: { items: NewsItem[] }) {
   };
 
   return (
-    <section className=" py-16 w-[90vw]">
+    <section className=" w-[90vw]">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Área Principal do Carrossel */}
-        <div className="lg:col-span-2 relative h-[60vh] lg:h-[77vh] overflow-hidden">
+        <div className="lg:col-span-2 relative h-[60vh] lg:h-[77vh] overflow-hidden rounded-xl">
           {items.map((item, index) => (
             <article
               key={item.id}
               className={`absolute inset-0 transition-all duration-500 ${getCardStyle(
-                index
+                index,
+                activeIndex,
+                items.length
               )}`}
             >
               <div className="relative h-full overflow-hidden rounded-2xl shadow-xl">
@@ -62,11 +47,14 @@ export default function NewsCarousel({ items }: { items: NewsItem[] }) {
                   <p className="text-gray-200 mt-4 line-clamp-2">
                     {item.excerpt}
                   </p>
+                  <time className="text-xs text-gray-400 mt-auto pt-2 block">
+                    {item.timestamp}
+                  </time>
                 </div>
               </div>
             </article>
           ))}
-          {/* Controles de Navegação */}
+
           {/* Controles de Navegação */}
           <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4 lg:top-auto lg:translate-y-0 lg:bottom-8 lg:right-8 lg:w-auto lg:justify-end z-20 lg:gap-2">
             <button
@@ -111,7 +99,7 @@ export default function NewsCarousel({ items }: { items: NewsItem[] }) {
           </div>
         </div>
 
-        <div className="hidden lg:col-span-1 lg:flex flex-col h-[80vh]">
+        <div className="hidden lg:col-span-1 lg:flex flex-col h-[80vh]np">
           <div className="flex flex-col gap-[20.5px] h-full overflow-y-auto custom-scrollbar">
             {items.map((item, index) => (
               <article
