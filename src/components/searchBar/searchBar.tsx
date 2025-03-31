@@ -42,7 +42,7 @@ export default function SearchBar({
         <button
           type="button"
           onClick={() => handleSearch()} // Executa a busca ao clicar no ícone
-          className="absolute right-2 text-gray-500 hover:text-red-700"
+          className="cursor-pointer absolute right-2 text-gray-500 hover:text-red-700"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,20 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Para redirecionar o usuário
-import Link from "next/link"; // Importando o componente Link do Next.js
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Logo from "../logo/logo";
-import SearchBar from "../searchBar/searchBar"; // Importando o componente SearchBar
+import SearchBar from "../searchBar/searchBar";
 import { isWindowWidthAtLeast } from "./headerUtils";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false); // Estado para monitorar o scroll
-  const router = useRouter(); // Hook para redirecionar
+  const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10); // Define como true se o scroll for maior que 0
+      setIsScrolled(window.scrollY > 10);
     };
 
     const handleResize = () => {
@@ -38,7 +38,7 @@ export default function Header() {
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
-      router.push(`/searchPage?query=${encodeURIComponent(query)}`); // Redireciona para a página de busca
+      router.push(`/searchPage?query=${encodeURIComponent(query)}`);
     }
   };
 
@@ -77,27 +77,33 @@ export default function Header() {
           {/* Barra de busca sempre visível (Desktop) */}
           <SearchBar isVisible={true} onSearch={handleSearch} />
 
-          {/* Menu tradicional (Desktop) */}
+          {/* Menu tradicional (Desktop) com linha vermelha progressiva */}
           <ul className="flex gap-8 orbitron-text text-xl">
             <li>
-              <Link href="/" className="hover:text-red-500 transition-colors">
+              <Link
+                href="/"
+                className="relative hover:text-red-500 transition-colors group"
+              >
                 Home
+                <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
             <li>
               <Link
-                href="/contact"
-                className="hover:text-red-500 transition-colors"
+                href="/contactPage"
+                className="relative hover:text-red-500 transition-colors group"
               >
                 Contact
+                <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
             <li>
               <Link
-                href="/about"
-                className="hover:text-red-500 transition-colors"
+                href="/aboutPage"
+                className="relative hover:text-red-500 transition-colors group"
               >
                 About
+                <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
           </ul>
@@ -121,34 +127,34 @@ export default function Header() {
             {/* Search Bar Mobile */}
             <SearchBar
               onSearch={handleSearch}
-              onSearchClick={() => setIsMenuOpen(false)} // Fecha o menu ao clicar no ícone
+              onSearchClick={() => setIsMenuOpen(false)}
             />
 
             {/* Mobile Menu Items */}
-            <ul className="space-y-6">
+            <ul className="flex flex-col gap-4 mt-8 orbitron-text text-xl">
               <li>
                 <Link
                   href="/"
                   className="hover:text-red-500 transition-colors"
-                  onClick={toggleMenu} // Fecha o menu ao clicar no link
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Home
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="/contactPage"
                   className="hover:text-red-500 transition-colors"
-                  onClick={toggleMenu} // Fecha o menu ao clicar no link
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="/aboutPage"
                   className="hover:text-red-500 transition-colors"
-                  onClick={toggleMenu} // Fecha o menu ao clicar no link
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   About
                 </Link>
