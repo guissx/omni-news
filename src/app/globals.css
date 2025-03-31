@@ -35,6 +35,7 @@ ul,
 h2,
 h3 .orbitron-text {
   font-family: var(--font-orbitron);
+  font-color: black;
 }
 
 @keyframes neon-pulse {
