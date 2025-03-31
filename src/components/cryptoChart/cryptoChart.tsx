@@ -140,7 +140,8 @@ const CryptoCharts: React.FC = () => {
               Bitcoin Price (USD)
             </h3>
             <p className="text-sm lg:ext-lg font-semibold text-emerald-600">
-              Current: ${bitcoinData[bitcoinData.length - 1]?.price.toFixed(2)}
+              Current: $
+              {ethereumData[ethereumData.length - 1]?.price.toFixed(2)}
             </p>
             <Line
               data={bitcoinChartData}
