@@ -123,7 +123,7 @@ export default function NewsCarousel({ items }: { items: NewsItem[] }) {
                     <span className="text-xs font-semibold text-red-500 uppercase">
                       {item.category}
                     </span>
-                    <h3 className="font-bold text-base mt-1 line-clamp-3">
+                    <h3 className="font-bold text-white text-base mt-1 line-clamp-3">
                       {item.title}
                     </h3>
                     <time className="text-xs text-gray-400 mt-auto pt-2 block">

@@ -71,6 +71,7 @@ const CryptoCharts: React.FC = () => {
           suggestedMin: minPrice * 0.99, // Define o mínimo como 95% do menor valor
           suggestedMax: maxPrice * 1.02, // Define o máximo como 105% do maior valor
           ticks: {
+            maxTicksLimit: 5, // Limita o número de ticks no eixo Y
             callback: function (tickValue: string | number) {
               if (typeof tickValue === "number") {
                 return `$${tickValue.toFixed(0)}`; // Formata os valores do eixo Y
@@ -83,15 +84,30 @@ const CryptoCharts: React.FC = () => {
     };
   };
 
+  const formatXAxisLabels = (time: string) => {
+    const date = new Date(time);
+    // Exibe apenas o dia e o mês para telas pequenas
+    return window.innerWidth < 768
+      ? new Intl.DateTimeFormat("en-US", {
+          day: "2-digit",
+          month: "short",
+          year: undefined,
+        }).format(date)
+      : new Intl.DateTimeFormat("en-US", {
+          day: "2-digit",
+          month: "short",
+        }).format(date);
+  };
+
   // Dados para o gráfico do Bitcoin
   const bitcoinChartData: ChartData<"line"> = {
-    labels: bitcoinData.map((point) => point.time),
+    labels: bitcoinData.map((point) => formatXAxisLabels(point.time)),
     datasets: [
       {
         label: "Bitcoin Price (USD)",
         data: bitcoinData.map((point) => point.price),
         fill: false,
-        borderColor: "rgba(34, 211, 238, 1)",
+        borderColor: "rgba(255, 215, 0, 1)",
         tension: 0.1,
       },
     ],
@@ -99,13 +115,13 @@ const CryptoCharts: React.FC = () => {
 
   // Dados para o gráfico do Ethereum
   const ethereumChartData: ChartData<"line"> = {
-    labels: ethereumData.map((point) => point.time),
+    labels: ethereumData.map((point) => formatXAxisLabels(point.time)),
     datasets: [
       {
         label: "Ethereum Price (USD)",
         data: ethereumData.map((point) => point.price),
         fill: false,
-        borderColor: "rgba(235, 64, 52, 1)",
+        borderColor: "rgba(0, 0, 0, 1)",
         tension: 0.1,
       },
     ],
@@ -119,10 +135,13 @@ const CryptoCharts: React.FC = () => {
       ) : (
         <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-8">
           {/* Gráfico do Bitcoin */}
-          <div className="w-[90vw] h-[30vh] lg:w-[45vw] lg:h-[50vh] flex flex-col px-3.5 py-12 bg-gray-50 rounded-lg shadow-2xl justify-center items-center relative overflow-hidden border-1 border-red-900">
-            <h3 className="text-xl font-bold mb-4 text-center">
+          <div className="w-[90vw] h-[30vh] lg:w-[45vw] lg:h-[50vh] flex flex-col px-3.5 pb-6 pt-6 lg:py-12 bg-gray-50 rounded-lg shadow-2xl justify-center items-center relative overflow-hidden border-1 border-red-900">
+            <h3 className="text-sm lg:text-xl font-bold text-center">
               Bitcoin Price (USD)
             </h3>
+            <p className="text-sm lg:ext-lg font-semibold text-emerald-600">
+              Current: ${bitcoinData[bitcoinData.length - 1]?.price.toFixed(2)}
+            </p>
             <Line
               data={bitcoinChartData}
               options={getDynamicYAxisOptions(bitcoinData)}
@@ -130,10 +149,13 @@ const CryptoCharts: React.FC = () => {
             />
           </div>
           {/* Gráfico do Ethereum */}
-          <div className="w-[90vw] h-[30vh] lg:w-[45vw] lg:h-[50vh] flex flex-col px-3.5 py-12 bg-gray-50 rounded-lg shadow-2xl justify-center items-center relative overflow-hidden border-1 border-red-900">
-            <h3 className="text-xl font-bold mb-4 text-center">
+          <div className="w-[90vw] h-[30vh] lg:w-[45vw] lg:h-[50vh] flex flex-col px-3.5 pb-6 pt-6 lg:py-12 bg-gray-50 rounded-lg shadow-2xl justify-center items-center relative overflow-hidden border-1 border-red-900">
+            <h3 className="text-sm lg:text-xl font-bold text-center">
               Ethereum Price (USD)
             </h3>
+            <p className="text-sm lg:text-lg font-semibold text-emerald-600">
+              Current: ${bitcoinData[bitcoinData.length - 1]?.price.toFixed(2)}
+            </p>
             <Line
               data={ethereumChartData}
               options={getDynamicYAxisOptions(ethereumData)}
