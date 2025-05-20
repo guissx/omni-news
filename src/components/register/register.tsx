@@ -29,8 +29,9 @@ export default function RegisterForm() {
   const onSubmit = async (data: FormData) => {
     try {
       setApiError("");
-      // Corrigido: removida a variável não utilizada confirmPassword
-      const { confirmPassword: _, ...userData } = data;
+      // Corrigido: usando desestruturação sem criar variável não utilizada
+      const { name, email, password } = data;
+      const userData = { name, email, password };
       
       const response = await axios.post(
         "https://news-letter-backend.vercel.app/users/register",
