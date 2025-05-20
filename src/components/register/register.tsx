@@ -29,7 +29,8 @@ export default function RegisterForm() {
   const onSubmit = async (data: FormData) => {
     try {
       setApiError("");
-      const { confirmPassword, ...userData } = data;
+      // Corrigido: removida a variável não utilizada confirmPassword
+      const { confirmPassword: _, ...userData } = data;
       
       const response = await axios.post(
         "https://news-letter-backend.vercel.app/users/register",
@@ -42,6 +43,7 @@ export default function RegisterForm() {
       );
 
       if (response.status === 201) {
+        alert("Cadastro realizado com sucesso! Redirecionando para login...");
         reset();
         router.push("/loginPage");
       }
