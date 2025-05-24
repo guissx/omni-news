@@ -41,8 +41,8 @@ export default function LoginForm() {
       console.log("Resposta do login:", response.data);
       
       if (response.status === 200) {
-        localStorage.setItem("authToken", response.data.token);
-        router.push("/dashboard"); // Redireciona após login para area logada
+        localStorage.setItem("token", response.data.token);
+        router.push("/admin/CarouselSettingsPage"); // Redireciona após login para area logada
       }
     } catch (error) {
       console.error("Erro no login:", error);

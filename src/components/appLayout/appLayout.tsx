@@ -7,7 +7,7 @@ import ParticlesBackground from "../particlesBackground/particlesBackground";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const hideLayout = pathname === "/loginPage" || pathname === "/registerPage";
+  const hideLayout = pathname === "/loginPage" || pathname === "/registerPage" || pathname === "/admin/CarouselSettingsPage" ;
 
   return (
     <>
