@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import emailjs from "emailjs-com";
 
 type FormData = {
   name: string;
@@ -44,6 +45,15 @@ export default function RegisterForm() {
       );
 
       if (response.status === 201) {
+          await emailjs.send(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+       process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_2!,
+      {
+      from_name: name,
+      to_email: email,
+      },
+    process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
+  );
         alert("Cadastro realizado com sucesso! Redirecionando para login...");
         reset();
         router.push("/loginPage");
