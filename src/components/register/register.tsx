@@ -45,15 +45,14 @@ export default function RegisterForm() {
       );
 
       if (response.status === 201) {
-          await emailjs.send(
-      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-       process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_2!,
-      {
-      from_name: name,
-      to_email: email,
-      },
-    process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
-  );
+       await axios.post(
+          "https://news-letter-backend.vercel.app/api/email/send-email",
+          {
+            template_key: "welcome_new_user", 
+            from_name: name,
+            to_email: email,
+          })
+
         alert("Cadastro realizado com sucesso! Redirecionando para login...");
         reset();
         router.push("/loginPage");

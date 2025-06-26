@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import emailjs from "emailjs-com";
+import axios from "axios";
 import { showSuccessMessage, resetForm } from "./formsUtils";
 
 export default function Forms() {
@@ -12,18 +12,17 @@ export default function Forms() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const form = e.currentTarget;
+    const formData = new FormData(e.currentTarget);
+    const formValues = Object.fromEntries(formData.entries());
 
     try {
-      await emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        form,
-        process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
-      );
+      const response = await axios.post('https://news-letter-backend.vercel.app/email/send-email', {
+        template_key: 'contact', 
+        ...formValues
+      });
 
-      showSuccessMessage(setShowPopup); // Exibe a mensagem de sucesso
-      resetForm(setFormKey); // Reseta o formulário
+      showSuccessMessage(setShowPopup);
+      resetForm(setFormKey);
     } catch (error) {
       console.error("Erro ao enviar o e-mail:", error);
       alert("Ocorreu um erro ao enviar sua mensagem. Tente novamente.");
